@@ -120,7 +120,7 @@ fillna(0) — pune 0 la prima linie (nu are cu ce să compare).
 
 Această funcție ma ajută să vad cum costul total al creditului variază în timp.
 
-6. Buton pentru adăugare credit
+6. Buton pentru adăugare credit    -> este elementul care „salvează” datele introduse.
 
 if st.button("➕ Adaugă credit"):
     luni = calculeaza_luni(durata)
@@ -163,8 +163,15 @@ Când se apasa butonul:
 7. Afișare tabel cu credite
 
 st.subheader("📋 Tabel credite introduse")
-df_afisat = st.session_state.istoric.copy()
-st.dataframe(df_afisat, use_container_width=True)
+->Afișează un subtitlu (text mai mic decât st.title(), dar mai mare decât textul normal).
+->Textul este „📋 Tabel credite introduse” — apare pe pagină ca un antet de secțiune.
+->Este folosit în aplicația ta:
+->Este plasat chiar înainte de afișarea tabelului cu toate creditele adăugate de utilizator:
+
+df_afisat = st.session_state.istoric.copy()   -> creează o copie independentă a tabelului (DataFrame-ului) salvat în sesiunea Streamlit.
+
+st.dataframe(df_afisat, use_container_width=True)  -> oferă un tabel interactiv: pot sorta coloane, derula, etc.
+
 Copiază DataFrame-ul din sesiune și îl afișează într-un tabel interactiv pe pagină.
 
 8. Recomandări AI simple pe baza datelor introduse
@@ -202,11 +209,11 @@ if df_afisat["an_"].nunique() > 1:
     st.pyplot(fig)
 Dacă există date din cel puțin 2 ani diferiți, afișează un grafic linie.
 
-Graficul arată variația procentuală a plăților totale în timp.
+-> Graficul arată variația procentuală a plăților totale în timp.
 
-Folosește matplotlib pentru desenarea graficului.
+-> Folosește matplotlib pentru desenarea graficului.
 
-Afișează graficul în aplicația Streamlit.
+-> Afișează graficul în aplicația Streamlit.
 
 
 10 Pentru a porni aplicația web Streamlit:
@@ -227,53 +234,6 @@ C:\Users\arsen\OneDrive\Desktop\FINANCIAL-JOURNEY>streamlit run main.py
 S-a  deschis browserul http://localhost:8501    
 
       
-
-
-
-
-
-
-
-
-🔢 5. Funcția calculeaza_variatia(df)
-
-
-➕ 6. Butonul "Adaugă credit"
-Este elementul care „salvează” datele introduse.
-
-Construcția st.session_state.istoric = pd.concat([...]) este importantă pentru că păstrează toate creditele adăugate anterior, nu doar ultimul.
-
-📋 7. Tabel afișat
-st.dataframe() oferă un tabel interactiv: poți sorta coloane, derula, etc.
-
-use_container_width=True îl face să ocupe toată lățimea paginii.
-
- 
- 8. Recomandări AI (bazate pe reguli)
-Nu folosește inteligență artificială propriu-zisă, dar este un exemplu de logică automată de interpretare — utilă în practică.
-
-Poți extinde asta cu reguli mai avansate sau chiar modele ML în viitor.
-
-
- 9. Graficul cu matplotlib
-
-"df_afisat["an_"].nunique() > 1"    -> asigură că există cel puțin 2 ani diferiți pentru a putea calcula o variație între ele.
-
-ax.plot(...) desenează o linie între puncte.
-
-st.pyplot(fig) afișează graficul în pagina web — este o integrare între matplotlib și Streamlit.
-
-
-
-
-
- 10. Lansarea aplicației
-
-cd "C:\Users\arsen\OneDrive\Desktop\financial-journey"
-streamlit run main.py
-✅ Dacă browserul s-a deschis pe http://localhost:8501, aplicația funcționează!
-
-
 
 ## Instrucțiuni
 Rulează notebook-ul în Jupyter.
