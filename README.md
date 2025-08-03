@@ -107,16 +107,18 @@ dobanda	"Dobândă (%)"	Dobânda anuală nominală aplicată
 
 def calculeaza_variatia(df):
     df = df.sort_values('an_')
-    df['total_plata'] = df['rata'] * df['luni']
-    df['variatia'] = df['total_plata'].pct_change().fillna(0) * 100
+    df['total_plata'] = df['rata'] * df['luni']  ->Calculează plata totală (total_plata) ca rata * număr luni.
+   
+    df['variatia'] = df['total_plata'].pct_change().fillna(0) * 100           ->Calculează variația procentuală a plății totale față de anul precedent (pct_change).
     return df
-
-->Calculează plata totală (total_plata) ca rata * număr luni.
-
-->Calculează variația procentuală a plății totale față de anul precedent (pct_change).
 
 ->Primele valori care nu au an anterior primesc 0.
 
+pct_change() calculează procentul de variație față de anul anterior.
+
+fillna(0) — pune 0 la prima linie (nu are cu ce să compare).
+
+Această funcție ma ajută să vad cum costul total al creditului variază în timp.
 
 6. Buton pentru adăugare credit
 
@@ -145,24 +147,21 @@ if st.button("➕ Adaugă credit"):
 
     istoric_calc = calculeaza_variatia(st.session_state.istoric)
     st.session_state.istoric['variatia'] = istoric_calc['variatia'].values
-Când apăsați butonul, calculează:
+Când se apasa butonul:
 
-luni
+->Calculează:
+-luni
+-rata lunară
+-suma lunară simplă (fără dobândă)
 
-rata lunară
+->Construiește un dicționar cu toate datele creditului.
 
-suma lunară simplă (fără dobândă)
+->Adaugă noul rând în DataFrame-ul din sesiune.
 
-Construiește un dicționar cu toate datele creditului.
-
-Adaugă noul rând în DataFrame-ul din sesiune.
-
-Actualizează variația plăților pentru toate creditele.
+->Actualizează variația plăților pentru toate creditele.
 
 7. Afișare tabel cu credite
-python
-Copy
-Edit
+
 st.subheader("📋 Tabel credite introduse")
 df_afisat = st.session_state.istoric.copy()
 st.dataframe(df_afisat, use_container_width=True)
@@ -237,11 +236,7 @@ S-a  deschis browserul http://localhost:8501
 
 
 🔢 5. Funcția calculeaza_variatia(df)
-pct_change() calculează procentul de variație față de anul anterior.
 
-fillna(0) — pune 0 la prima linie (nu are cu ce să compare).
-
-Această funcție te ajută să vezi cum costul total al creditului variază în timp.
 
 ➕ 6. Butonul "Adaugă credit"
 Este elementul care „salvează” datele introduse.
