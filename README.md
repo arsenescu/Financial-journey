@@ -41,33 +41,28 @@ st.session_state — pentru stocarea datelor între interacțiuni.
 
 st.button() — pentru acțiuni.
 
-3. Setări inițiale pentru Streamlit
-python
-Copy
-Edit
-st.set_page_config(page_title="Calcul Credit", layout="wide")
-🔹 Configurează aspectul paginii Streamlit:
 
-page_title="Calcul Credit" — setează titlul paginii (afișat în tab-ul browserului).
+3. Setări inițiale pentru Streamlit
+
+st.set_page_config(page_title="Calcul Credit", layout="wide")     -> Cconfigurează aspectul paginii Streamlit:
+
+page_title="Calcul Credit"     —> setează titlul paginii (afișat în tab-ul browserului).
 
 layout="wide" — lărgește layout-ul paginii, util pentru afișarea tabelelor și graficelor.
 
-python
-Copy
-Edit
-st.title("💰 Simulare Credit și Analiză")
-🔹 Afișează titlul aplicației în partea de sus a paginii, cu un emoji sugestiv.
+st.title("💰 Simulare Credit și Analiză    -> afișează titlul aplicației în partea de sus a paginii, cu un emoji sugestiv.
 
-🔒 Inițializare variabilă de sesiune (st.session_state)
-python
-Copy
-Edit
+
+ Inițializare variabilă de sesiune (st.session_state)
+
 if "istoric" not in st.session_state:
     st.session_state.istoric = pd.DataFrame(columns=[
-        "an_", "suma", "ircc", "dae", "durata", "dobanda", "luni", "suma_lunara", "rata", "variatia"
-    ])
-🔹 st.session_state este folosit pentru a păstra datele între interacțiuni ale utilizatorului (fără să se piardă la fiecare reîncărcare).
-🔹 Se creează o variabilă numită istoric — un tabel (DataFrame) cu coloane predefinite:
+        "an_", "suma", "ircc", "dae", "durata", "dobanda", "luni", "suma_lunara", "rata", "variatia"  
+   
+    ->st.session_state păstrează date între interacțiunile utilizatorului cu aplicația.
+    ->st.session_state este folosit pentru a păstra datele între interacțiuni ale utilizatorului (fără să se piardă la fiecare reîncărcare).
+    ->se creează o variabilă numită istoric — un tabel (DataFrame) cu coloane predefinite:
+    ->dacă nu există deja o variabilă istoric, se creează una goală — un DataFrame cu coloanele pentru datele despre credite.
 
 Coloana	Descriere
 an_	Anul contractării creditului
@@ -80,33 +75,6 @@ luni	Durata creditului exprimată în luni
 suma_lunara	Suma medie rambursată lunar (principalul împărțit la luni)
 rata	Rata lunară totală (inclusiv dobândă)
 variatia	Variația procentuală a totalului plătit față de anul anterior
-
-Dacă dorești, putem continua cu:
-
-✅ 4. Inputuri de la utilizator
-✅ 5. Calculul ratelor și logică financiară
-✅ 6. Afișare tabel și analiză AI
-✅ 7. Graficul de variație
-
-Vrei să mergem mai departe?
-
-
-
-
-
-
-
-
-
-Ask ChatGPT
-You said:
-"if "istoric" not in st.session_state:
-    st.session_state.istoric = pd.DataFrame(columns=[
-      "an_", "suma", "ircc", "dae", "durata", "dobanda", "luni", "suma_lunara", "rata", "variatia])"
-
-st.session_state păstrează date între interacțiunile utilizatorului cu aplicația.
-
-Dacă nu există deja o variabilă istoric, se creează una goală — un DataFrame cu coloanele pentru datele despre credite.
 
 
 4. Inputuri utilizator (formular)
@@ -126,7 +94,7 @@ dobanda = col3.number_input("Dobândă (%)")
 
 -> st.columns(3) — împarte pagina în 3 coloane verticale, pentru o organizare mai clară a câmpurilor de input.
 
-📥 Explicația fiecărui câmp de input:
+Explicația fiecărui câmp de input:
 Variabilă	Etichetă UI	Descriere
 an	"An"	Anul în care se accesează creditul
 suma	"Suma credit"	Valoarea totală a împrumutului
@@ -135,19 +103,7 @@ dae	"DAE (%)"	Dobânda Anuală Efectivă (include toate costurile)
 durata	"Durata (ani)"	Numărul de ani pentru rambursare (1-50)
 dobanda	"Dobândă (%)"	Dobânda anuală nominală aplicată
 
-🔸 number_input permite introducerea de valori numerice, cu validare (ex. minim/maxim).
-
-Vrei să mergem la pasul 5: Funcții de calcul sau să reformulez ceva aici înainte?
-
-
-
-
-
-
-
-
-You said:
-Sortează datele după an.
+-> number_input permite introducerea de valori numerice, cu validare (ex. minim/maxim).
 
 def calculeaza_variatia(df):
     df = df.sort_values('an_')
@@ -155,11 +111,11 @@ def calculeaza_variatia(df):
     df['variatia'] = df['total_plata'].pct_change().fillna(0) * 100
     return df
 
-Calculează plata totală (total_plata) ca rata * număr luni.
+->Calculează plata totală (total_plata) ca rata * număr luni.
 
-Calculează variația procentuală a plății totale față de anul precedent (pct_change).
+->Calculează variația procentuală a plății totale față de anul precedent (pct_change).
 
-Primele valori care nu au an anterior primesc 0.
+->Primele valori care nu au an anterior primesc 0.
 
 
 6. Buton pentru adăugare credit
